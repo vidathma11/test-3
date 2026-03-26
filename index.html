@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>I'm Sorry ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    text-align: center;
+}
+
+/* VIDEO */
+video {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    top: 0;
+    left: 0;
+    z-index: -2;
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+}
+
+/* overlay */
+.overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.45);
+    z-index: -1;
+}
+
+/* content */
+.content {
+    position: relative;
+    top: 20%;
+}
+
+h1 {
+    font-size: 50px;
+}
+
+/* typing text */
+#typing {
+    font-size: 22px;
+    border-right: 2px solid white;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* buttons */
+button {
+    padding: 12px 25px;
+    font-size: 18px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    margin: 20px;
+}
+
+#yesBtn {
+    background: white;
+    color: #ff4d6d;
+}
+
+#noBtn {
+    background: #ff4d6d;
+    color: white;
+    position: absolute;
+}
+
+/* hearts */
+.heart {
+    position: absolute;
+    color: red;
+    animation: float 5s linear infinite;
+}
+
+@keyframes float {
+    0% {transform: translateY(100vh);}
+    100% {transform: translateY(-10vh);}
+}
+</style>
+</head>
+
+<body>
+
+<video id="bgVideo" autoplay muted></video>
+<div class="overlay"></div>
+
+<div class="content">
+<h1>I'm Really Sorry Manika 😔❤️</h1>
+<p id="typing"></p>
+
+<br>
+<button id="yesBtn" onclick="yesClick()">Yes 🥺</button>
+<button id="noBtn">No 😒</button>
+</div>
+
+<audio autoplay loop>
+  <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3">
+</audio>
+
+<script>
+// VIDEO LIST
+const videos = ["video1.mp4", "video2.mp4"];
+let current = 0;
+
+const video = document.getElementById("bgVideo");
+
+// play first
+video.src = videos[current];
+video.play();
+
+// smooth fade switch
+video.addEventListener("ended", () => {
+    video.style.opacity = 0;
+
+    setTimeout(() => {
+        current = (current + 1) % videos.length;
+        video.src = videos[current];
+        video.play();
+        video.style.opacity = 1;
+    }, 1000);
+});
+
+// TYPING EFFECT
+const text = "Sudu nona... please forgive me 🥺💖 I love you so much...";
+let i = 0;
+
+function typing() {
+    if (i < text.length) {
+        document.getElementById("typing").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typing, 50);
+    }
+}
+typing();
+
+// hearts
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 5000);
+}
+setInterval(createHeart, 300);
+
+// YES
+function yesClick() {
+    alert("Aww 🥺❤️ Thank you!! I love you forever 💖");
+}
+
+// NO move
+const noBtn = document.getElementById("noBtn");
+
+noBtn.addEventListener("mouseover", moveButton);
+noBtn.addEventListener("click", moveButton);
+
+function moveButton() {
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 50);
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+}
+</script>
+
+</body>
+</html>
